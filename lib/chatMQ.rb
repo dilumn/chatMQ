@@ -1,5 +1,5 @@
-require "chatMQ/version"
+require "chatMQ/cli"
 
 module ChatMQ
-  # Your code goes here...
+
 end

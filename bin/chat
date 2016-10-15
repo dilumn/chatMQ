@@ -1,0 +1,5 @@
+#!/usr/bin/env ruby
+
+require "chatMQ"
+
+ChatMQ::CLI.new(ARGV)

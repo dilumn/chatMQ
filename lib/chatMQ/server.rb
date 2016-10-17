@@ -9,17 +9,22 @@ module ChatMQ
 
     def start
       context = ZMQ::Context.new(1)
-      socket = context.socket(ZMQ::REP)
-      socket.bind("tcp://*:5555")
+
+      publisher = context.socket(ZMQ::PUB)
+      publisher.setsockopt(ZMQ::SNDHWM, 0);
+      publisher.bind("tcp://*:5561")
+
+      # Socket to receive signals
+      syncservice = context.socket(ZMQ::REP)
+      syncservice.bind("tcp://*:5562")
 
       while true
-        request = ''
-        rc = socket.recv_string(request)
-
-        puts "Received request. Data: #{request.inspect}"
-
-        # Send reply back to client
-        socket.send_string("TESTING 123")
+        string = ""
+        syncservice.recv_string(string)
+        # send synchronization reply
+        syncservice.send_string("")
+        sleep 1
+        publisher.send_string(string)
       end
     end
 

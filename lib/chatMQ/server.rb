@@ -21,9 +21,10 @@ module ChatMQ
       while true
         string = ""
         syncservice.recv_string(string)
+
         # send synchronization reply
         syncservice.send_string("")
-        sleep 1
+
         publisher.send_string(string)
       end
     end

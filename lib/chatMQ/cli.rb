@@ -1,5 +1,6 @@
 require "chatMQ/server"
 require "chatMQ/client"
+require "chatMQ/listener"
 
 module ChatMQ
   class CLI
@@ -9,6 +10,8 @@ module ChatMQ
         start_server(ARGV[1])
       elsif ARGV.include? "connect"
         connect_server(ARGV[1])
+      elsif ARGV.include? "listen"
+        listen_server(ARGV[1])
       end
     end
 
@@ -18,6 +21,10 @@ module ChatMQ
 
     def connect_server(address)
       client = ChatMQ::Client.new(address)
+    end
+
+    def listen_server(address)
+      listener = ChatMQ::Listener.new(address)
     end
 
   end
